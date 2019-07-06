@@ -322,3 +322,24 @@ insert into applies (cand_usrname, job_id) values
 ('abrown', 9),
 ('abrown', 11)
 ;
+
+CREATE TABLE IF NOT EXISTS interview (
+  'cand_usrname' VARCHAR(12) NOT NULL,
+  'rec_usrname' VARCHAR(12) NOT NULL,
+  'date' DATE,
+  'timestart' TIME(4),
+  'duration' INT(4),
+  'comments' TINYTEXT DEFAULT 'No comments',
+  PRIMARY KEY ('cand_usrname', 'rec_usrname'),
+  CONSTRAINT 'cand_name'
+    FOREIGN KEY ('cand_usrname')
+    REFERENCES 'erecruit'.'candidate' ('username')
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT 'rec_name'
+    FOREIGN KEY ('rec_usrname')
+    REFERENCES 'erecruit'.'recruiter' ('username')
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+)
+ENGINE = InnoDB;
