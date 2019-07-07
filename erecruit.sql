@@ -11,6 +11,11 @@ street varchar(15),
 num tinyint,
 city varchar(15),
 country varchar(15),
+sect_title varchar(15),
+ CONSTRAINT tomeastitle
+    FOREIGN KEY ('sect_title') REFERENCES 'erecruit'.'sector' ('title')
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 PRIMARY KEY (AFM)
 )engine=InnoDB;
 
@@ -343,3 +348,5 @@ CREATE TABLE IF NOT EXISTS interview (
     ON UPDATE CASCADE
 )
 ENGINE = InnoDB;
+
+
