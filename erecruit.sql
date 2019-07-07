@@ -407,7 +407,7 @@ insert into interview (cand_usrname, rec_usrname, date, timestart, duration, com
 (lionarF, papad, '2019-2-30', '14:20:10', 29, 'full stack developer, but does not cooperate well')
 (liagourma, Giankost, '2018-12-27', '19:32:50', 45, 'junior developer, leaves a lot to be desired')
 (mnikol, bettyg, '2019-2-5', '20:00:00', 10, 'threw chair on recruiter for unknown reason')
-(abrown, varcon82, '2019-3-3', '09:45:54', 100, 'very persistent at getting the job')
+(abrown, varcon82, '2019-3-3', '09:45:54', 100, 'very persistent at getting the job');
 
 
 CREATE TABLE sector (
@@ -423,12 +423,26 @@ CREATE TABLE sector (
    )
    ENGINE = InnoDB;
 
+insert into sector (title, information, belongs_to) values
+('Computer Science', 'Root element, no more general antikeim', NULL),
+('Databases', 'Level one element, child of Computer Science', 'Computer Science'),
+('AI', 'Level one element, child of Computer Science', 'Computer Science'),
+('Algorithms', 'Level one element, child of Computer Science', 'Computer Science'),
+('Networking', 'Level one element, child of Computer Science', 'Computer Science'),
+('Graphics', 'Level one element, child of Computer Science', 'Computer Science'),
+('2D', 'Level two element, child of Graphics', 'Graphics'),
+('3D', 'Level two element, child of Graphics', 'Graphics'),
+('Animation', 'Level two element, child of Graphics', 'Graphics'),
+('Programming', 'Level one element, child of Computer Science', 'Computer Science'),
+('Web Programming', 'Level two element, child of Programming', 'Programming'),
+('Mobile Apps', 'Level two element, child of Programming', 'Programming');
+
 
 CREATE TABLE logs (
   logID INT NOT NULL AUTO_INCREMENT,
   username VARCHAR(12) NOT NULL,
   datetime DATETIME NOT NULL,
-  success TINYINT(1) NOT NULL,
+  success ENUM('yes', 'no') NOT NULL,
   action ENUM('insert', 'update', 'delete') NULL,
   table SET('user', 'candidate', 'recruiter', 'languages', 'applies', 'has_degree', 'degree', 'project', 'requires', 'job', 'etairia', 'antikeim', 'sector', 'logs') NULL,
   PRIMARY KEY (logID),
@@ -439,3 +453,11 @@ CREATE TABLE logs (
     ON UPDATE CASCADE
     )
 ENGINE = InnoDB;
+
+insert into logs (username, datetime, success, action, table) values
+(cleogeo, '2019-02-13 12:23:34', 'yes', 'insert', 'degree')
+(msmith, '2017-07-11 14:08:23', 'no', 'delete', 'candidate')
+(zazahir23, '2018-01-27 20:02:56', 'yes', 'update', 'project')
+(n_tri,'2017-12-08 21:07:12', 'yes', 'delete', 'sector')
+(varcon82, '2019-05-22 17:56:01', 'no', 'update', 'job')
+
