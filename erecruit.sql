@@ -386,7 +386,7 @@ CREATE TABLE interview (
   'date' DATE,
   'timestart' TIME(4),
   'duration' INT(4),
-  'comments' TINYTEXT DEFAULT 'No comments',
+  'comments' TEXT,
   PRIMARY KEY ('cand_usrname', 'rec_usrname'),
   CONSTRAINT 'cand_name'
     FOREIGN KEY ('cand_usrname')
@@ -400,6 +400,8 @@ CREATE TABLE interview (
     ON UPDATE CASCADE
 )
 ENGINE = InnoDB;
+
+insert into interview (cand_usrname, rec_usrname, date, timestart, duration, comments)
 
 
 CREATE TABLE sector (
