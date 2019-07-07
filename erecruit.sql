@@ -328,7 +328,7 @@ insert into applies (cand_usrname, job_id) values
 ('abrown', 11)
 ;
 
-CREATE TABLE IF NOT EXISTS interview (
+CREATE TABLE interview (
   'cand_usrname' VARCHAR(12) NOT NULL,
   'rec_usrname' VARCHAR(12) NOT NULL,
   'date' DATE,
@@ -350,3 +350,15 @@ CREATE TABLE IF NOT EXISTS interview (
 ENGINE = InnoDB;
 
 
+CREATE TABLE sector (
+  'title' VARCHAR(36) NOT NULL,
+  'information' LONGTEXT NOT NULL,
+  'belongs_to' VARCHAR(45) NULL,
+  PRIMARY KEY ('title'),
+  CONSTRAINT 'tomeas'
+    FOREIGN KEY ('belongs_to')
+    REFERENCES 'erecruit'.'sector' ('title')
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+   )
+   ENGINE = InnoDB;
