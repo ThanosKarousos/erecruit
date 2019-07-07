@@ -401,7 +401,13 @@ CREATE TABLE interview (
 )
 ENGINE = InnoDB;
 
-insert into interview (cand_usrname, rec_usrname, date, timestart, duration, comments)
+insert into interview (cand_usrname, rec_usrname, date, timestart, duration, comments) values
+(cleogeo, msmith, '2019-1-23', '18:46:05', 30, 'very good python knowledge'),
+(zazahir23, n_tri, '2019-1-24', '17:32:00', 78, 'poor people skills')
+(lionarF, papad, '2019-2-30', '14:20:10', 29, 'full stack developer, but does not cooperate well')
+(liagourma, Giankost, '2018-12-27', '19:32:50', 45, 'junior developer, leaves a lot to be desired')
+(mnikol, bettyg, '2019-2-5', '20:00:00', 10, 'threw chair on recruiter for unknown reason')
+(abrown, varcon82, '2019-3-3', '09:45:54', 100, 'very persistent at getting the job')
 
 
 CREATE TABLE sector (
