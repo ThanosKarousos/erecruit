@@ -33,7 +33,11 @@ title VARCHAR(36) NOT NULL,
 descr TINYTEXT,
 belongs_to varchar(36),
 PRIMARY KEY (title),
-CONSTRAINT ANTIKEIMENO FOREIGN KEY (belongs_to) REFERENCES antikeim(title) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT ANTIKEIMENO 
+FOREIGN KEY (belongs_to)
+REFERENCES antikeim(title)
+ON DELETE CASCADE
+ON UPDATE CASCADE
 )engine=InnoDB;
 
 insert into antikeim (title, descr, belongs_to) values 
@@ -63,10 +67,10 @@ insert into antikeim (title, descr, belongs_to) values
 ;
 
 
-CREATE TABLE `user` (
+CREATE TABLE user (
 username varchar(12) NOT NULL,
-`password` varchar(10),
-`name` varchar (25) NOT NULL,
+password varchar(10),
+name varchar (25) NOT NULL,
 surname varchar (35) NOT NULL,
 reg_date DATETIME,
 email varchar(30),
@@ -100,8 +104,16 @@ username VARCHAR(12) NOT NULL,
 exp_years TINYINT,
 firm CHAR(9),
 PRIMARY KEY (username),
-CONSTRAINT RECR_USER FOREIGN KEY (username) REFERENCES `user`(username) ON DELETE CASCADE ON UPDATE CASCADE,
-CONSTRAINT RECR_ETAIREIA FOREIGN KEY (firm) REFERENCES etaireia(AFM) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT RECR_USER 
+FOREIGN KEY (username)
+REFERENCES `user`(username) 
+ON DELETE CASCADE 
+ON UPDATE CASCADE,
+CONSTRAINT RECR_ETAIREIA 
+FOREIGN KEY (firm)
+REFERENCES etaireia(AFM)
+ON DELETE CASCADE
+ON UPDATE CASCADE
 )engine=InnoDB;
 
 insert into recruiter (username, exp_years, firm) values 
@@ -120,7 +132,11 @@ bio TEXT NOT NULL,
 sistatikes VARCHAR(35),
 certificates VARCHAR(35),
 PRIMARY KEY (username),
-CONSTRAINT CAND_USER FOREIGN KEY (username) REFERENCES `user`(username) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT CAND_USER
+FOREIGN KEY (username)
+REFERENCES user(username)
+ON DELETE CASCADE 
+ON UPDATE CASCADE
 )engine=InnoDB;
 
 insert into candidate(username, bio, sistatikes, certificates) values
@@ -137,7 +153,11 @@ CREATE TABLE languages(
 candid VARCHAR(12) NOT NULL,
 lang SET('EN', 'FR', 'SP', 'GR'),
 PRIMARY KEY (candid, lang),
-CONSTRAINT CAND_LANG FOREIGN KEY (candid) REFERENCES candidate(username) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT CAND_LANG
+FOREIGN KEY (candid)
+REFERENCES candidate(username)
+ON DELETE CASCADE
+ON UPDATE CASCADE
 )engine=InnoDB;
 
 insert into languages (candid, lang) values 
@@ -155,7 +175,11 @@ num TINYINT,
 descr TEXT,
 url varchar(60),
 PRIMARY KEY (candid, num),
-CONSTRAINT PROJ_CAND FOREIGN KEY (candid) REFERENCES candidate(username) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT PROJ_CAND 
+FOREIGN KEY (candid)
+REFERENCES candidate(username)
+ON DELETE CASCADE
+ON UPDATE CASCADE
 )engine=InnoDB;
 
 insert into project (candid, num, descr, url) values 
@@ -207,8 +231,16 @@ cand_usrname VARCHAR(12) NOT NULL,
 etos YEAR,
 grade FLOAT(3,1),
 PRIMARY KEY (degr_title, degr_idryma, cand_usrname),
-CONSTRAINT HAS_DEGR FOREIGN KEY (degr_title, degr_idryma) REFERENCES degree(titlos, idryma) ON DELETE CASCADE ON UPDATE CASCADE,
-CONSTRAINT HAS_CAND FOREIGN KEY (cand_usrname) REFERENCES candidate(username) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT HAS_DEGR 
+FOREIGN KEY (degr_title, degr_idryma)
+REFERENCES degree(titlos, idryma)
+ON DELETE CASCADE
+ON UPDATE CASCADE,
+CONSTRAINT HAS_CAND 
+FOREIGN KEY (cand_usrname)
+REFERENCES candidate(username)
+ON DELETE CASCADE 
+ON UPDATE CASCADE
 )engine=InnoDB;
 show tables;
 
@@ -240,7 +272,11 @@ recruiter VARCHAR(12) NOT NULL,
 announce_date DATETIME DEFAULT NOW(),
 submission_date DATE NOT NULL,
 PRIMARY KEY (id),
-CONSTRAINT JOB_RECR FOREIGN KEY (recruiter) REFERENCES recruiter(username) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT JOB_RECR 
+FOREIGN KEY (recruiter) 
+REFERENCES recruiter(username) 
+ON DELETE CASCADE
+ON UPDATE CASCADE
 )engine=InnoDB;
 
 insert into job (start_date, salary, position, edra, recruiter, announce_date, submission_date) values 
@@ -263,8 +299,16 @@ CREATE TABLE requires(
 job_id int(4) NOT NULL,
 antikeim_title VARCHAR(36) NOT NULL,
 PRIMARY KEY(job_id, antikeim_title),
-CONSTRAINT REQ_JOB FOREIGN KEY (job_id) REFERENCES job(id) ON DELETE CASCADE ON UPDATE CASCADE,
-CONSTRAINT REQ_ANTIK FOREIGN KEY (antikeim_title) REFERENCES antikeim(title) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT REQ_JOB 
+FOREIGN KEY (job_id) 
+REFERENCES job(id) 
+ON DELETE CASCADE 
+ON UPDATE CASCADE,
+CONSTRAINT REQ_ANTIK 
+FOREIGN KEY (antikeim_title)
+REFERENCES antikeim(title) 
+ON DELETE CASCADE 
+ON UPDATE CASCADE
 )engine=InnoDB;
 
 insert into requires (job_id, antikeim_title) values 
@@ -298,8 +342,16 @@ CREATE TABLE applies (
 cand_usrname VARCHAR(12) NOT NULL,
 job_id int(4) NOT NULL,
 PRIMARY KEY (cand_usrname, job_id),
-CONSTRAINT APPL_JOB FOREIGN KEY (job_id) REFERENCES job(id) ON DELETE CASCADE ON UPDATE CASCADE,
-CONSTRAINT APPL_CAND FOREIGN KEY (cand_usrname) REFERENCES candidate(username) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT APPL_JOB 
+FOREIGN KEY (job_id) 
+REFERENCES job(id) 
+ON DELETE CASCADE 
+ON UPDATE CASCADE,
+CONSTRAINT APPL_CAND 
+FOREIGN KEY (cand_usrname) 
+REFERENCES candidate(username) 
+ON DELETE CASCADE
+ON UPDATE CASCADE
 )engine=InnoDB;
 
 insert into applies (cand_usrname, job_id) values 
@@ -362,3 +414,20 @@ CREATE TABLE sector (
     ON UPDATE CASCADE
    )
    ENGINE = InnoDB;
+
+
+CREATE TABLE logs (
+  logID INT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(12) NOT NULL,
+  datetime DATETIME NOT NULL,
+  success TINYINT(1) NOT NULL,
+  action ENUM('insert', 'update', 'delete') NULL,
+  table SET('user', 'candidate', 'recruiter', 'languages', 'applies', 'has_degree', 'degree', 'project', 'requires', 'job', 'etairia', 'antikeim', 'sector', 'logs') NULL,
+  PRIMARY KEY (logID),
+  CONSTRAINT onoma
+    FOREIGN KEY (username)
+    REFERENCES user(username)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+    )
+ENGINE = InnoDB;
