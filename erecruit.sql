@@ -444,7 +444,7 @@ CREATE TABLE logs (
   datetime DATETIME NOT NULL,
   success ENUM('yes', 'no') NOT NULL,
   action ENUM('insert', 'update', 'delete') NULL,
-  table SET('user', 'candidate', 'recruiter', 'languages', 'applies', 'has_degree', 'degree', 'project', 'requires', 'job', 'etairia', 'antikeim', 'sector', 'logs') NULL,
+  pinakas SET('user', 'candidate', 'recruiter', 'languages', 'applies', 'has_degree', 'degree', 'project', 'requires', 'job', 'etairia', 'antikeim', 'sector', 'logs') NULL,
   PRIMARY KEY (logID),
   CONSTRAINT onoma
     FOREIGN KEY (username)
@@ -454,10 +454,10 @@ CREATE TABLE logs (
     )
 ENGINE = InnoDB;
 
-insert into logs (username, datetime, success, action, table) values
-(cleogeo, '2019-02-13 12:23:34', 'yes', 'insert', 'degree')
-(msmith, '2017-07-11 14:08:23', 'no', 'delete', 'candidate')
-(zazahir23, '2018-01-27 20:02:56', 'yes', 'update', 'project')
-(n_tri,'2017-12-08 21:07:12', 'yes', 'delete', 'sector')
-(varcon82, '2019-05-22 17:56:01', 'no', 'update', 'job')
+insert into logs (username, datetime, success, action, pinakas) values
+('cleogeo', '2019-02-13 12:23:34', 'yes', 'insert', 'degree'),
+('msmith', '2017-07-11 14:08:23', 'no', 'delete', 'candidate'),
+('zazahir23', '2018-01-27 20:02:56', 'yes', 'update', 'project'),
+('n_tri','2017-12-08 21:07:12', 'yes', 'delete', 'sector'),
+('varcon82', '2019-05-22 17:56:01', 'no', 'update', 'job');
 
